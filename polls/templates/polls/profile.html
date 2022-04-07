@@ -1,0 +1,42 @@
+{% extends 'polls/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+    <h1>Profile Page</h1>
+    <form action="/accounts/profile/" method="post">
+        <label for="username">Enter username: </label>
+        <input id="username" type="text" name="username" value= {{ user.username }}>
+        <br>
+
+        <label for="firstname">Enter first name: </label>
+        <input id="firstname" type="text" name="firstname" value= {{ user.first_name }}>
+        <br>
+
+        <label for="lastname">Enter last name: </label>
+        <input id="lastname" type="text" name="lastname" value= {{ user.last_name }}>
+        <br>
+
+        <label for="gender">Enter gender: </label>
+        <input id="gender" type="text" name="gender" value= {{ user.profile.gender }}>
+        <br>
+
+        <label for="birthday">Enter birthday: </label>
+        <input id="birthday" type="date" name="birthday" value= {{ user.profile.birthday }}>
+        <br>
+
+        <label for="age">Enter age: </label>
+        <input id="age" type="number" name="age" value= {{ user.profile.age }}>
+
+        <br>
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Save">
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
