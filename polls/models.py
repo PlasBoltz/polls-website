@@ -30,7 +30,7 @@ class Choice(models.Model):
 class Profile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     gender = models.CharField(max_length=1, default= "None", null=True)
-    birthday = models.DateField(default=timezone.now(), null=True)
+    weight = models.IntegerField(default=2, null=True)
     age = models.IntegerField(default=69, null=True)
 
     @receiver(post_save, sender=User)
