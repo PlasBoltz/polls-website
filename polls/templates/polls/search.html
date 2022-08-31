@@ -1,14 +1,25 @@
 {% extends 'polls/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div id="main" style="color:white; " class="container">
 {% if request.user.is_authenticated %}
 
-    <div style="text-align:center; background-color: #7289DA; width:50%; margin-left: 25%;"onclick="location.href='make_post/'">
-    <a style="font-size: 24px;">make post</a>
+    <div id="searchbar" style="float:center;background-color:rgb(134, 134, 134); width:50%; margin-left:25%;">
+        <form name="search-bar" method="post">
+            <input style="background-color:#26282c; color:rgb(221, 221, 221);float:center; font-size:18px; margin-left:2%; margin-top:2%; width:96%;" type="text" id="search-term" name="search-term" value="Enter Search Term">
+
+            <br>
+            {% csrf_token %}
+            {{form|crispy}}
+            <input style=" text-align:left;background-color:#7289DA; color:white; margin-left:43%; font-size:24px; margin-bottom:0.5%; width:14%;" name = "submit" type="submit" value="Search">
+            
+        </form>
     </div>
+
+
         <div style="padding-top:2%;"></div>
-    {% for post in posts%}
+    {% for post in results%}
 
     <div style=" width:50%; margin-left:25%; background-color:rgb(134, 134, 134)" onclick ='location.href=location.origin+"/post/{{post.id}}/"'>
         <div style="padding-top:1%; padding-bottom: 1%;">

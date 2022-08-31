@@ -1,0 +1,177 @@
+{% extends 'polls/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div style=" width:50%; margin-left:25%; background-color:rgb(134, 134, 134)">
+
+    <div style="padding-top:1%; padding-bottom: 2%;">
+        <form name = "delete" method = "post">
+            <label style="text-align:left; color:#26282c; margin-left:4%; font-size:14px;">{{main_comment.time_published}}</label>
+            
+            {% if user.profile == main_comment.author %}
+            {% csrf_token %}
+            {{form|crispy}}
+            <input style="text-align:left;background-color:#7289DA; color:white; margin-left:4%; font-size:12px; margin-bottom:0.5%;" name = "delete" type="submit" value="delete">
+            {% if error_message %}
+                <p style="color:white"><strong>{{ error_message }}</strong></p>
+            {% endif %}
+            {% endif %}
+        </form>
+    <div style="text-align:left; padding-left:2%;  margin-left:2.5%; width:95%; background-color:#26282c; color:rgb(221, 221, 221);">
+        <a style="font-size: 18px;;">{{main_comment.content}}</a>
+        <a style = "font-size:14px; color :rgb(196, 196, 196) " onclick="location.href=location.origin+'/user/{{main_comment.author.id}}/'"> - {{main_comment.author.display_name}}</a>
+    </div>
+</div> 
+
+    <form method="post" style="padding-bottom:1%; text-align:left; margin-left:2.5%; width:95%;">
+        <input value="Enter Comment" type="text" id="comment" name="comment" style = "width:85%; padding-left:2%;  font-size:18px; background-color:#26282c; color:rgb(221, 221, 221);">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input value="Comment" type="submit" style = "font-size:18px; background-color:#7289DA; color:rgb(221, 221, 221);">
+        {% if error_message %}
+            <p style="color:white"><strong>{{ error_message }}</strong></p>
+        {% endif %}
+    </form>
+    
+
+    <script>
+        function collapse(id){
+            let target = document.getElementById(id);
+            if (target.style.display === "none") {
+        target.style.display = "block";
+      } else {
+        target.style.display = "none";
+      }
+        }
+        
+        
+    </script>
+    
+    {% for comment in comments %}
+    {% if comment.get_comments|length != 0 %}
+    <div  onclick = "collapse({{comment.id}});"style="padding-top:3%; padding-bottom: 1%; float:left; width:15px; border-left: 1px solid white; height:48px; margin-left:2.5%; margin-top:2%"> </div>
+    {% endif %}
+    <div style="margin-left:2%; padding-top:2%; padding-bottom: 1%;" >
+        
+        <div onclick = "location.href = location.origin+'/comment/{{comment.id}}/'">
+        <div style="padding-top:1%;text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 12px; background-color:#505050; color:rgb(221, 221, 221);">
+            <a onclick="location.href=location.origin+'/user/{{comment.author.id}}/'">{{comment.author.display_name}}</a>
+            <a style="color:#c2c2c2;font-size:10px;">{{comment.time_published}}</a>
+        </div>
+    
+        <div style="text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 16px; background-color:#505050; color:rgb(221, 221, 221);">
+            <a style="font-size: 16px;;">{{comment.content}}</a>
+        </div>
+    </div>
+    
+        {% if comment.get_comments|length != 0 %}
+        <div id ="{{comment.id}}">
+        
+        {% for comment1 in comment.get_comments %}
+        {% if comment1.get_comments|length != 0 %}
+        <div  onclick = "collapse({{comment1.id}})"style="margin-left:2.5%; margin-top:2%; padding-top:3%; padding-bottom: 1%; float:left; width:15px; border-left: 1px solid white; height:48px; "> </div>
+        {% endif %}
+        <div style="margin-left:2%;">
+            
+    <div style="padding-top:2%; padding-bottom: 1%;" onclick = "location.href = location.origin+'/comment/{{comment1.id}}/'">
+        <div style="padding-top:1%;text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 12px; background-color:#505050; color:rgb(221, 221, 221);">
+            <a onclick="location.href=location.origin+'/user/{{comment1.author.id}}/'">{{comment1.author.display_name}}</a>
+            <a style="color:#c2c2c2;font-size:10px;">{{comment1.time_published}}</a>
+        </div>
+    
+        <div style="text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 16px; background-color:#505050; color:rgb(221, 221, 221);">
+            <a style="font-size: 16px;;">{{comment1.content}}</a>
+        </div>
+    
+    </div> 
+    {% if comment1.get_comments|length != 0 %}
+    <div style="padding-top:1%; padding-bottom: 1%;" >
+    <div id ="{{comment1.id}}">
+    
+    {% for comment2 in comment1.get_comments %}
+    {% if comment2.get_comments|length != 0 %}
+    <div  onclick = "collapse({{comment2.id}})"style=" margin-left:2.5%; padding-top:3%; padding-bottom: 1%; float:left; width:15px; border-left: 1px solid white; height:48px; "> </div>
+    {% endif %}
+    <div style=" margin-left:2%;">
+    <div style=" padding-bottom: 1%;" onclick = "location.href = location.origin+'/comment/{{comment2.id}}/'">
+    <div style="padding-top:1%;text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 12px; background-color:#505050; color:rgb(221, 221, 221);">
+        <a onclick="location.href=location.origin+'/user/{{comment2.author.id}}/'">{{comment2.author.display_name}}</a>
+        <a style="color:#c2c2c2;font-size:10px;">{{comment2.time_published}}</a>
+    </div>
+    
+    <div style="text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 16px; background-color:#505050; color:rgb(221, 221, 221);">
+        <a style="font-size: 16px;;">{{comment2.content}}</a>
+    </div>
+    
+    </div> 
+    {% if comment2.get_comments|length != 0 %}
+    <div style="padding-top:1%; padding-bottom: 1%;" >
+    
+    <div id ="{{comment2.id}}">
+    
+    {% for comment3 in comment2.get_comments %}
+    
+    {% if comment3.get_comments|length != 0 %}
+    <div  onclick = "collapse({{comment3.id}})"style=" margin-left:2.5%; padding-top:3%; padding-bottom: 1%; float:left; width:15px; border-left: 1px solid white; height:48px; "> </div>
+    {% endif %}
+    <div style=" margin-left:2%;">
+    <div style=" padding-bottom: 1%;" onclick = "location.href = location.origin+'/comment/{{comment3.id}}/'">
+    <div style="padding-top:1%;text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 12px; background-color:#505050; color:rgb(221, 221, 221);">
+        <a onclick="location.href=location.origin+'/user/{{comment3.author.id}}/'">{{comment3.author.display_name}}</a>
+        <a style="color:#c2c2c2;font-size:10px;">{{comment3.time_published}}</a>
+    </div>
+    
+    <div style="text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 16px; background-color:#505050; color:rgb(221, 221, 221);">
+        <a style="font-size: 16px;;">{{comment3.content}}</a>
+    </div>
+    
+    </div> 
+    {% if comment3.get_comments|length != 0 %}
+    <div style="padding-top:1%; padding-bottom: 1%;" >
+    <div id ="{{comment3.id}}">
+    
+    {% for comment4 in comment3.get_comments %}
+    
+    <div style=" margin-left:2%;">
+    <div style=" padding-bottom: 1%;" onclick = "location.href = location.origin+'/comment/{{comment4.id}}/'">
+    <div style="padding-top:1%;text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 12px; background-color:#505050; color:rgb(221, 221, 221);">
+        <a onclick="location.href=location.origin+'/user/{{comment4.author.id}}/'">{{comment4.author.display_name}}</a>
+        <a style="color:#c2c2c2;font-size:10px;">{{comment4.time_published}}</a>
+    </div>
+    
+    <div style="text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 16px; background-color:#505050; color:rgb(221, 221, 221);">
+        <a style="font-size: 16px;;">{{comment4.content}}</a>
+        
+    </div>
+    
+    </div> 
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+    {% endif %}
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+    {% endif %}
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+    {% endif %}
+    </div>
+    
+    
+    
+    {% endfor %}
+    </div>
+        {% endif %}
+    
+    </div> 
+    {% endfor %}
+    
+    
+<div style="padding-top:2%"></div>
+
+{% endblock %}

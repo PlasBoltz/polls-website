@@ -1,4 +1,5 @@
 from cProfile import Profile
+from .models import Post
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
@@ -17,4 +18,14 @@ class UserRegisterForm(UserCreationForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['username', 'email' , 'first_name', 'last_name', 'gender', 'age', 'birthday']
+        fields = ['username', 'email' , 'first_name', 'last_name']
+
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title, content, meta_tags']
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ['content']

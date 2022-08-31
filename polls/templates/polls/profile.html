@@ -2,41 +2,63 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container">
+<div style = "text-align: center;"class="container">
     {% if user.is_authenticated %}
-    <h1>Profile Page</h1>
-    <form action="/accounts/profile/" method="post">
+    <div style='margin-left:25%;width:50%;background-color:rgb(134, 134, 134);'>
+    <h1 style="color:#26282c">Profile Page</h1>
+    <form style="color:#26282c" action="/accounts/profile/" method="post">
         <label for="username">Enter username: </label>
-        <input id="username" type="text" name="username" value= {{ user.username }}>
+        <input style="color:white; background-color: #26282c;" id="username" type="text" name="username" value= {{ user.username }}>
         <br>
 
-        <label for="firstname">Enter first name: </label>
-        <input id="firstname" type="text" name="firstname" value= {{ user.first_name }}>
-        <br>
-
-        <label for="lastname">Enter last name: </label>
-        <input id="lastname" type="text" name="lastname" value= {{ user.last_name }}>
-        <br>
-
-        <label for="gender">Enter gender: </label>
-        <input id="gender" type="text" name="gender" value= {{ user.profile.gender }}>
-        <br>
-
-        <label for="weight">Enter weight(in kg): </label>
-        <input id="weight" type="number" name="weight" value= {{ user.profile.weight }}>
-        <br>
-
-        <label for="age">Enter age: </label>
-        <input id="age" type="number" name="age" value= {{ user.profile.age }}>
-
+        <label for="username">Enter Display Name: </label>
+        <input style="color:white; background-color: #26282c;" id="display_name" type="text" name="display_name" value= {{ user.profile.display_name }}>
         <br>
         {% csrf_token %}
         {{form|crispy}}
-        <input type="submit" value="Save">
+        <input style="color:white; background-color:#7289DA ;" type="submit" value="Save">
         {% if error_message %}
-            <p><strong>{{ error_message }}</strong></p>
+            <p style="color:white"><strong>{{ error_message }}</strong></p>
         {% endif %}
+        <br>
+        <a href="/accounts/change_password/">
+            <input style="color:white; background-color:#7289DA ;"type="button" value="Change Passowrd" />
+         </a>
     </form>
+</div>
+    <div style = "padding-top:2%;  color:white;"class="container">
+    {% if user_posts|length != 0%}
+    <h2>Posts</h2>
+    {% endif %}
+    {% for post in user_posts%}
+
+
+
+    <div style="width:50%; margin-left:25%; background-color:rgb(134, 134, 134)" onclick ='location.href=location.origin+"/post/{{post.id}}/";'>
+        <div style="padding-top:1%; padding-bottom: 1%; text-align:left;">
+            <a style="color:#26282c; margin-left:4%; font-size:14px; ">{{post.time_published}}</a>
+        <div style="text-align:left; padding-left:2%;   margin-left:2.5%; width:95%;font-size: 24px; background-color:#26282c; color:rgb(221, 221, 221);">
+            <a style = "font-size:24px;" : 24px;>{{post.title}}</a>
+            
+        </div>
+    </div>        
+    
+
+
+        <div style="padding-top:1%; padding-bottom: 1%;">
+        <div style="text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 24px; background-color:#26282c; color:rgb(221, 221, 221);">
+            <a style="font-size: 18px;;">{{post.content}}</a>
+        </div>
+    </div>   
+
+    </div>
+    <div style="padding-top:2%"></div>
+    
+
+    
+    
+    {% endfor %}
+</div>
     {% endif %}
 </div>
 {% endblock %}

@@ -1,35 +1,53 @@
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+  <nav class="navbar navbar-expand-md mb-4" style="background-color: #7289DA;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">jake bolls</a>
+    <a class="navbar-brand" href="#">
+      <img src="https://cdn.discordapp.com/attachments/280677585111744514/1003693048829575238/art.png" alt="Logo" width="48oy" height="48">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/polls/">Home</a>
+          <a style="color:white; font-family:monospace; font-size:150%; font-weight:bold;" class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
+        <li class="nav-item">
+          <a style="color:white; font-family:monospace; font-size:150%; font-weight:bold;" class="nav-link active" aria-current="page" href="/search/">Search</a>
+        </li>
+
+        <!-- <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li> -->
+      </ul>
+      <!-- <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> -->
+    </div>
+
+    <div style="float:right; padding-right:0;" id="navbarCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
 
         <li class="nav-item">
           {% if request.user.is_authenticated %}
-            <a class="nav-link active" aria-current="page" href="/accounts/profile/">Profile</a>
+            <a style="color:white; font-family:monospace; font-size:150%; font-weight:bold;" class="nav-link active" aria-current="page" href="/accounts/profile/">Profile</a>
           {% else %}
           {% endif %}
         </li>
 
         <li class="nav-item">
           {% if request.user.is_authenticated %}
-            <a class="nav-link active" href="/accounts/logout/">Log Out</a>
+            <a style="color:white; font-family:monospace; font-size:150%; font-weight:bold;"  class="nav-link active" href="/accounts/logout/">Log-Out</a>
 
           {% else %}
-            <a class="nav-link active" active href="/accounts/login/">Login</a>
+            <a style="color:white; font-family:monospace; font-size:150%; font-weight:bold;" class="nav-link active" active href="/accounts/login/">Login</a>
           {% endif %}
         </li>
         
         <li class="nav-item">
           {% if request.user.is_authenticated %}
           {% else %}
-            <a class="nav-link active" aria-current="page" href="/polls/signup/">Sign Up</a>
+            <a style="color:white; font-family:monospace; font-size:150%; font-weight:bold;" class="nav-link active" aria-current="page" href="/signup/">Sign Up</a>
           {% endif %}
         </li>
 

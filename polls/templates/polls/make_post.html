@@ -1,0 +1,37 @@
+{% extends 'polls/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+<div id="main" style="color:white; text-align:center ;">
+{% if request.user.is_authenticated %}
+    
+    <div style="width:50%; margin-left:25%; background-color:rgb(134, 134, 134)">
+        <div style="padding-top: 2.5%;">
+            <form method="post">
+            <textarea rows="1"style=" width:95%;font-size: 24px; background-color:#26282c; color:rgb(221, 221, 221);" id="title" name="title" value="Enter a Title">Enter Title</textarea>
+
+            <textarea style="width:95%; height:300px; font-size: 24px; background-color:#26282c; color:rgb(221, 221, 221);" id="content" name="content" value="Enter Post Content">Enter Post Content</textarea>
+
+            <textarea rows = "1"style="width:95%; font-size: 24px; background-color:#26282c; color:rgb(221, 221, 221);" id="metatags" name="metatags" value="Enter Meta Tags">Enter Meta Tags</textarea></div>
+        <div style="padding-top:2.5%; padding-bottom: 2.5%;">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" style="width:95%; font-size: 24px; background-color:#26282c; color:rgb(221, 221, 221);" value="Create Post">
+        {% if error_message %}
+            <p style="color:white"><strong>{{ error_message }}</strong></p>
+        {% endif %}
+    
+    </div>
+</form>
+        
+    </div>
+
+
+{% else %}
+    <h1 style="color:white;">Please log in!</h1>
+{% endif %}
+
+        </div>
+{% endblock %}

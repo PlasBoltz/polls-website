@@ -1,0 +1,49 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+
+<div id="main" style="color:white; text-align:center ;" class="container">
+    {% if user.is_authenticated %}
+<div style='margin-left:25%;width:50%;'>
+    <h1 style="color:white">{{user.profile.display_name}}'s Profile Page</h1>
+    <a style="color:white">Username: {{user.username}}</a>
+
+</div>
+
+<div style = "padding-top:2%;  color:white;"class="container">
+    {% if user_posts|length != 0%}
+    <h2>Posts</h2>
+    {% endif %}
+    {% for post in user_posts%}
+
+    <div style="width:50%; margin-left:25%; background-color:rgb(134, 134, 134);" onclick ='location.href=location.origin+"/post/{{post.id}}/"'>
+        <div style="padding-top:1%; padding-bottom: 1%; text-align:left;" >
+            <a style="color:#26282c; margin-left:4%; font-size:14px; text-align:left;">{{post.time_published}}</a>
+    
+        <div style="text-align:left; padding-left:2%;   margin-left:2.5%; width:95%;font-size: 24px; background-color:#26282c; color:rgb(221, 221, 221);">
+            <a style = "font-size:24px;" : 24px;>{{post.title}}</a>
+            <a style = "font-size:14px; color :rgb(196, 196, 196) "> - {{post.author.display_name}}</a>
+        </div>
+    </div>        
+    
+
+        <div style="padding-top:1%; padding-bottom: 1%;">
+        <div style="text-align:left; padding-left:2%;  margin-left:2.5%; width:95%;font-size: 24px; background-color:#26282c; color:rgb(221, 221, 221);">
+            <a style="font-size: 18px;;">{{post.content}}</a>
+        </div>
+    </div>   
+
+    </div>
+    <div style="padding-top:2%"></div>
+    
+
+    
+    
+    {% endfor %}
+</div>
+
+{% else %}
+    <h1 style="color:white;">Please log in!</h1>
+{% endif %}
+        </div>
+        
+{% endblock %}
